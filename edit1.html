@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Guía Turístico - Editor</title>
+    <link rel="stylesheet" href="dise.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .fotoPerfil {
+            text-align: center;
+            padding: 20px;
+        }
+        .fotoPerfil img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border: 3px solid #4CAF50; 
+        }
+        .foto_portada {
+            width: 100%;
+            height: 400px; 
+            object-fit: cover;
+            filter: blur(10px); 
+        }
+        .infoServicio {
+            padding: 20px;
+        }
+        .infoServicio ul {
+            margin: 20px; 
+            margin-top: 30px;
+        }
+        .diseBotones {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .precioDeBotones {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+        .precioDeBotones:hover {
+            background-color: #0056b3;
+        }
+        #atencion {
+            text-align: center;
+            margin: 20px auto;
+            max-width: 80%;
+            padding: 20px;
+            border: 2px solid white;
+            border-radius: 10px;
+            background-color: #212121;
+            color: white;
+        }
+        #atencion div {
+            margin-top: 20px;
+        }
+        .editor {
+            margin: 20px;
+            text-align: center;
+        }
+        .editor textarea {
+            width: 80%;
+            height: 200px;
+            margin-bottom: 10px;
+        }
+        .editor button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .editor button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <img class="foto_portada" src="imagenes/daniela.jpg" alt="Foto de Portada">
+        <div class="fotoPerfil">
+            <img src="imagenes/daniela2.jpg" alt="Foto de Perfil">
+            <h1>Daniela</h1>
+        </div>
+        <div class="infoServicio">
+            <h2>¡Descubre Medellín conmigo!</h2>
+            <div id="rosado">
+                <p>Hola a todos, soy Daniela, tu guía turística apasionada por mostrarte lo mejor de Medellín.</p>
+                <p>Con mis 25 años de edad y más de 3 años de experiencia, estoy aquí para ofrecerte una experiencia inolvidable llena de descubrimientos y aventuras.</p>
+                <p>Imagina explorar los rincones más fascinantes de Medellín de la mano de alguien que conoce cada calle, cada historia y cada rincón oculto. ¡Esa persona soy yo! Estoy aquí para hacer que tu viaje sea mucho más que una simple visita; estoy aquí para convertirlo en una experiencia única y auténtica.</p>
+                <p>¿Qué puedes esperar de mí como tu guía? Más que solo un acompañamiento, te ofrezco una inmersión completa en la cultura, la historia y la belleza de Medellín. Desde los vibrantes murales de la Comuna 13 hasta la encantadora arquitectura del Pueblito Paisa, te llevaré a lugares que te dejarán sin aliento.</p>
+                <p>¿Te preocupa la logística? ¡No te preocupes! Planificaré cada detalle, desde el transporte hasta la comida, para que puedas relajarte y disfrutar al máximo. Además, cada recorrido tiene una duración de 4 horas, tiempo perfecto para sumergirte en la magia de Medellín.</p>
+            </div>
+            <ul>
+                <li>Comuna 13</li>
+                <li>Pueblito Paisa</li>
+                <li>Guatapé</li>
+            </ul>
+            <h2>Precio por Persona:</h2>
+            <div class="diseBotones">
+                <a class="precioDeBotones" href="#" onclick="sendMessage('573116462010', '¡Hola Daniela!, quiero más información del tour a la Comuna 13')">Comuna 13: 30.000</a>
+                <a class="precioDeBotones" href="#" onclick="sendMessage('573116462010', '¡Hola Daniela!, quiero más información del tour al Pueblito Paisa')">Pueblito Paisa: 50.000</a>
+                <a class="precioDeBotones" href="#" onclick="sendMessage('573116462010', '¡Hola Daniela!, quiero más información del tour a Guatapé')">Guatapé: 80.000</a>
+            </div>
+        </div>
+    </section>
+    <section id="atencion">
+        <h2>Aquí podrás ver mis horarios de atención</h2>
+        <div>
+            <p><strong>Lunes:</strong> 9:00 a.m. - 7:00 p.m.</p>
+            <p><strong>Miércoles:</strong> 9:00 a.m. - 7:00 p.m.</p>
+            <p><strong>Viernes:</strong> 9:00 a.m. - 7:00 p.m.</p>
+            <p><strong>Sábado:</strong> 7:00 a.m. - 9:00 p.m.</p>
+        </div>
+    </section>
+    <div class="editor">
+        <textarea id="editorTexto" placeholder="Edita el texto aquí..."></textarea>
+        <button onclick="guardarCambios()">Guardar Cambios</button>
+    </div>
+    <script>
+        // Cargar texto guardado desde localStorage al cargar la página
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const savedText = localStorage.getItem('infoServicioTextDaniela');
+            if (savedText) {
+                document.getElementById('rosado').innerHTML = savedText;
+            }
+        });
+
+        function guardarCambios() {
+            // Obtener el texto del editor
+            const editorText = document.getElementById('editorTexto').value;
+
+            // Guardar el texto en localStorage
+            localStorage.setItem('infoServicioTextDaniela', editorText);
+
+            // Actualizar el contenido del div infoServicio
+            document.getElementById('rosado').innerHTML = editorText;
+        }
+
+        function sendMessage(phone, text) {
+            const encodedText = encodeURIComponent(text);
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            let url;
+
+            if (isMobile) {
+                url = `whatsapp://send?phone=${phone}&text=${encodedText}`;
+            } else {
+                url = `https://web.whatsapp.com/send?phone=${phone}&text=${encodedText}`;
+            }
+
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>

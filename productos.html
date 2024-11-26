@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuarto Neón - Productos</title>
+    <link rel="stylesheet" href="dise.css">
+    <style>
+        #productos {
+            text-align: center;
+            margin: 20px auto;
+            max-width: 80%;
+            padding: 20px;
+            border: 2px solid white;
+            border-radius: 10px;
+            background-color: #212121;
+            color: white;
+        }
+        #productos img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border: 3px solid #4CAF50; 
+        }
+        .produ {
+            display: inline-block; 
+            margin: 30px; 
+            text-align: center; 
+        }
+
+        .produ img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border: 3px solid #4CAF50; 
+        }
+
+        .Guia button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .Guia button:hover {
+            background-color: #0056b3;
+        }
+        
+        .imagenContainer {
+            margin-bottom: 20px; /* Agregar un poco de espacio entre cada contenedor de imagen y el siguiente */
+        }
+        
+    </style>
+</head>
+<body>
+    <section id="productos">
+        <h2>Productos Locales</h2>
+        <p>Aquí puedes ver fotos de nuestro hermoso cuarto Neon.</p>
+        <div class="imagenContainer">
+            <img src="imagenes/imagencita.jpg" alt="Cuarto MIMAMAMEMIMA">
+        </div>
+        <div class="imagenContainer">
+            <img src="imagenes/imagencita2.jpg" alt="">
+        </div>
+        <div class="imagenContainer">
+            <img src="imagenes/imagencita3.jpg" alt="">
+        </div>
+        <button class="produ" onclick="sendMessage('573245340108', 'Hola, me gustaria saber mas del cuarto Neón')">Pregunta por nuestro cuarto</button>
+    </section>
+    <section id="productos">
+        <h2>Aquí vas a ver algunos de nuestros productos</h2>
+        <div class="imagenContainer">
+            <img src="imagenes/producto1.jpg" alt="">
+            <button class="produ" onclick="sendMessage('573245340108', 'Hola, que precio tiene? me gustaria saber mas del Maxti Café')">Maxti Café</button>
+        </div>
+        <div class="imagenContainer">
+            <img src="imagenes/producto2.jpg" alt="">
+            <button class="produ" onclick="sendMessage('573245340108', 'Hola, que precio tiene? me gustaria saber mas del porta velas')">Porta velas</button>
+        </div>
+        <div class="imagenContainer">
+            <img src="imagenes/producto3.jpg" alt="">
+            <button class="produ" onclick="sendMessage('573245340108', 'Hola, que precio tiene?, me gustaria saber mas del pocillo de medellin')">Pocillo medellin</button>
+        </div>
+        <div class="imagenContainer">
+            <img src="imagenes/producto4.jpg" alt="">
+            <button class="produ" onclick="sendMessage('573245340108', 'Hola, que precio tiene?, me gustaria saber mas del cervecero')">Cervecero medellin</button>
+        </div>
+    </section>
+    <script>
+        function sendMessage(phone, text) {
+            const encodedText = encodeURIComponent(text);
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            let url;
+
+            if (isMobile) {
+                url = `whatsapp://send?phone=${phone}&text=${encodedText}`;
+            } else {
+                url = `https://web.whatsapp.com/send?phone=${phone}&text=${encodedText}`;
+            }
+
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>

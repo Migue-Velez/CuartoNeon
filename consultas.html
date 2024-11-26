@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comuna 13 - Sitios Turísticos</title>
+  <style>
+    /* Estilo que proporcionaste */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #0e0e0e;
+      color: white;
+    }
+
+    header, section, footer {
+      padding: 20px;
+    }
+
+    header {
+      background-color: #3c3c3c;
+      text-align: center;
+    }
+
+    h1, h2 {
+      color: #ffc107;
+    }
+
+    section {
+      background-color: #212121;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: white;
+      padding: 8px 10px;
+      border: none;
+      cursor: pointer;
+      margin-right: 10px;
+      border-radius: 15px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    footer {
+      text-align: center;
+      background-color: #3c3c3c;
+    }
+
+    .centrado {
+      text-align: center;
+    }
+
+    #atractivos {
+      text-align: center;
+      margin: 10px;
+    }
+
+    #historia {
+      text-align: center;
+      padding: 20px;
+      border: 2px solid white;
+      border-radius: 10px;
+      margin: 20px auto;
+      max-width: 80%;
+    }
+
+    .discentrado {
+      text-align: center;
+      margin: 20px auto;
+      max-width: 400px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .quickLoginButton {
+      display: inline-block;
+      padding: 5px 5px;
+      background-color: #8ec3fc;
+      color: #fff;
+      margin-right: 10px;
+      border-radius: 15px;
+    }
+
+    /* Modal Estilo */
+    #modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+    }
+
+    #modal-content {
+      background-color: #212121;
+      margin: 15% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 50%;
+      color: white;
+      text-align: center;
+      max-height: 70%;
+      overflow-y: auto;
+    }
+
+    #close-btn {
+      background-color: #f44336;
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    #close-btn:hover {
+      background-color: #da190b;
+    }
+
+    #sitios-lista {
+      list-style: none;
+      padding: 0;
+      max-height: 400px;
+      overflow-y: scroll;
+    }
+
+    #sitios-lista li {
+      background-color: #f4f4f4;
+      color: #000;
+      margin: 5px 0;
+      padding: 10px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Bienvenidos a la Comuna 13</h1>
+    <p>Descubre los sitios turísticos destacados de este icónico lugar en Medellín.</p>
+  </header>
+
+  <section>
+    <h2 class="centrado">Explora los sitios turísticos</h2>
+    <p class="centrado">Tambien podras encontrar varias zonas turisticas, y así  apoyar el crecimiento local, y conocer más de medellin la ciudad de la eterna primavera.</p>
+    <div class="centrado">
+      <button onclick="mostrarSitios()">Mostrar Sitios Turísticos</button>
+    </div>
+    <div id="atractivos" class="centrado"></div>
+  </section>
+
+  <footer>
+    <p>&copy; 2024 - Comuna 13 Turismo</p>
+  </footer>
+
+  <!-- Modal -->
+  <div id="modal">
+    <div id="modal-content">
+      <h2>Sitios Turísticos</h2>
+      <ul id="sitios-lista"></ul>
+      <button id="close-btn" onclick="cerrarModal()">Cerrar</button>
+    </div>
+  </div>
+
+  <script>
+    // Ruta al archivo GeoJSON (asegúrate de que exista en la misma carpeta del proyecto)
+    const archivoGeojson = './atractivos_turisticos.geojson';
+
+    // Función para extraer los nombres de los sitios turísticos
+    function extraerNombresSitios(data) {
+      const sitios = [];
+      const features = data.features || [];
+
+      features.forEach((registro) => {
+        const properties = registro.properties || {};
+        const nombresitio = properties.nombresitio;
+        if (nombresitio) {
+          sitios.push(nombresitio);
+        }
+      });
+
+      return sitios;
+    }
+
+    // Función para mostrar los sitios turísticos en el modal
+    function mostrarSitios() {
+      fetch(archivoGeojson)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('No se pudo cargar el archivo GeoJSON');
+          }
+          return response.json();
+        })
+        .then((data) => {
+          const sitios = extraerNombresSitios(data);
+          const modal = document.getElementById("modal");
+          const listaSitios = document.getElementById("sitios-lista");
+
+          // Limpiar lista anterior
+          listaSitios.innerHTML = '';
+
+          sitios.forEach((sitio) => {
+            const li = document.createElement("li");
+            li.textContent = sitio;
+            listaSitios.appendChild(li);
+          });
+
+          // Mostrar el modal
+          modal.style.display = "block";
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+          alert('Ocurrió un error al cargar los datos. Verifica la consola para más detalles.');
+        });
+    }
+
+    // Función para cerrar el modal
+    function cerrarModal() {
+      const modal = document.getElementById("modal");
+      modal.style.display = "none";
+    }
+
+    // Cerrar el modal cuando se hace clic fuera de él
+    window.onclick = function(event) {
+      const modal = document.getElementById("modal");
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    };
+  </script>
+</body>
+</html>

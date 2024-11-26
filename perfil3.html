@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Guía Turístico</title>
+    <link rel="stylesheet" href="dise.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .fotoPerfil {
+            text-align: center;
+            padding: 20px;
+        }
+        .fotoPerfil img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border: 3px solid #4CAF50; 
+        }
+        .foto_portada {
+            width: 100%;
+            height: 400px; 
+            object-fit: cover;
+            filter: blur(10px); 
+        }
+        .infoServicio {
+            padding: 20px;
+        }
+        .infoServicio ul {
+            margin: 20px; 
+            margin-top: 30px;
+        }
+        .diseBotones {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .precioDeBotones {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+        .precioDeBotones:hover {
+            background-color: #0056b3;
+        }
+        #atencion {
+            text-align: center;
+            margin: 20px auto;
+            max-width: 80%;
+            padding: 20px;
+            border: 2px solid white;
+            border-radius: 10px;
+            background-color: #212121;
+            color: white;
+        }
+        #atencion div {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <img class="foto_portada" src="imagenes/marianaportada.jpg" alt="Foto de Portada">
+        <div class="fotoPerfil">
+            <img src="imagenes/marianaperfil.jpg" alt="Foto de Perfil">
+            <h1>Mariana</h1>
+        </div>
+        <div class="infoServicio">
+            <h2>¡Descubre Medellín de la Mano de Mariana!</h2>
+            <div id="azul"></div>
+            <ul>
+                <li>Comuna 13</li>
+                <li>Pueblito Paisa</li>
+                <li>Guatapé</li>
+            </ul>
+            <h2>Precio por Persona:</h2>
+            <div class="diseBotones">
+                <a class="precioDeBotones" href="#" onclick="sendMessage('573046574010', '¡Hola Mariana!, quiero más información del tour a la Comuna 13')">Comuna 13: 30.000</a>
+                <a class="precioDeBotones" href="#" onclick="sendMessage('573046574010', '¡Hola Mariana!, deseo más información sobre el servicio turístico al Pueblito Paisa')">Pueblito Paisa: 50.000</a>
+                <a class="precioDeBotones" href="#" onclick="sendMessage('573046574010', '¡Hola Mariana!, deseo más información sobre el servicio turístico a Guatapé')">Guatapé: 80.000</a>
+            </div>
+        </div>
+    </section>
+    <section id="atencion">
+        <h2>Aquí podrás ver mis horarios de atención</h2>
+        <div>
+            <p><strong>Lunes:</strong> 10:00 a.m. - 7:00 p.m.</p>
+            <p><strong>Miércoles:</strong> 10:00 a.m. - 7:00 p.m.</p>
+            <p><strong>Viernes:</strong> 7:00 a.m. - 6:00 p.m.</p>
+            <p><strong>Sábado:</strong> 9:00 a.m. - 3:00 p.m.</p>
+        </div>
+    </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const savedText = localStorage.getItem('infoServicioTextMariana');
+            if (savedText) {
+                document.getElementById('azul').innerHTML = savedText;
+            }
+        });
+
+        function sendMessage(phone, text) {
+            const encodedText = encodeURIComponent(text);
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            let url;
+
+            if (isMobile) {
+                url = `whatsapp://send?phone=${phone}&text=${encodedText}`;
+            } else {
+                url = `https://web.whatsapp.com/send?phone=${phone}&text=${encodedText}`;
+            }
+
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>
